@@ -4,7 +4,9 @@ from torch.autograd import Function
 import torch.nn as nn
 from typing import Tuple
 
-import mmdet.ops.pointnet2.pointnet2_cuda as pointnet2
+# import mmdet.ops.pointnet2.pointnet2_cuda as pointnet2
+import ctypes 
+pointnet2 = ctypes.CDLL('/home/rajeev-gupta/sensyn_ws/src/SA-SSD/mmdet/ops/pointnet2/pointnet2_cuda.cpython-36m-x86_64-linux-gnu.so')
 
 class ThreeNN(Function):
 

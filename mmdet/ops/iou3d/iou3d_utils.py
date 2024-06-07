@@ -1,6 +1,14 @@
 import torch
-import mmdet.ops.iou3d.iou3d_cuda as iou3d_cuda
+# import mmdet.ops.iou3d.iou3d_cuda as iou3d_cuda
+# from mmdet.ops.iou3d import iou3d_cuda
 import math
+
+import sys
+import ctypes
+
+# sys.path.append('/home/rajeev-gupta/sensyn_ws/src/SA-SSD/mmdet/ops/iou3d')
+iou3d_cuda = ctypes.CDLL("/home/rajeev-gupta/sensyn_ws/src/SA-SSD/mmdet/ops/iou3d/iou3d_cuda.cpython-36m-x86_64-linux-gnu.so")
+
 
 def limit_period(val, offset=0.5, period=math.pi):
     return val - torch.floor(val / period + offset) * period
