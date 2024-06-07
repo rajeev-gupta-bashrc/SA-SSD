@@ -1,7 +1,7 @@
 from __future__ import division
 import torch
 import torch.nn as nn
-from mmdet.core import tensor2points
+from mmdet.core.bbox.transforms import tensor2points
 from mmdet import ops
 import numpy as np
 

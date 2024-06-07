@@ -1,11 +1,12 @@
 import spconv
+import spconv.pytorch
 from torch import nn
 from mmdet.models.utils import change_default_args, Sequential
 from mmdet.ops.pointnet2 import pointnet2_utils
 import torch
 from mmdet.ops import pts_in_boxes3d
 from mmdet.core.loss.losses import weighted_smoothl1, weighted_sigmoid_focal_loss
-from mmdet.core import tensor2points
+from mmdet.core.bbox.transforms import tensor2points
 import torch.nn.functional as F
 
 
@@ -100,13 +101,14 @@ class SpMiddleFHD(nn.Module):
         )
 
     def forward(self, voxel_features, coors, batch_size, is_test=False):
-
+        # voxel_features = torch.tensor(voxel_features)
+        # coors = torch.tensor(coors)
         points_mean = torch.zeros_like(voxel_features)
         points_mean[:, 0] = coors[:, 0]
         points_mean[:, 1:] = voxel_features[:, :3]
 
         coors = coors.int()
-        x = spconv.SparseConvTensor(voxel_features, coors, self.sparse_shape, batch_size)
+        x = spconv.pytorch.SparseConvTensor(voxel_features, coors, self.sparse_shape, batch_size)
         x, middle = self.backbone(x)
 
         x = x.dense()
@@ -136,38 +138,38 @@ class SpMiddleFHD(nn.Module):
 
 
 def single_conv(in_channels, out_channels, indice_key=None):
-    return spconv.SparseSequential(
-            spconv.SubMConv3d(in_channels, out_channels, 1, bias=False, indice_key=indice_key),
+    return spconv.pytorch.SparseSequential(
+            spconv.pytorch.SubMConv3d(in_channels, out_channels, 1, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
     )
 
 def double_conv(in_channels, out_channels, indice_key=None):
-    return spconv.SparseSequential(
-            spconv.SubMConv3d(in_channels, out_channels, 3, bias=False, indice_key=indice_key),
+    return spconv.pytorch.SparseSequential(
+            spconv.pytorch.SubMConv3d(in_channels, out_channels, 3, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
-            spconv.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
+            spconv.pytorch.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
     )
 
 def triple_conv(in_channels, out_channels, indice_key=None):
-    return spconv.SparseSequential(
-            spconv.SubMConv3d(in_channels, out_channels, 3, bias=False, indice_key=indice_key),
+    return spconv.pytorch.SparseSequential(
+            spconv.pytorch.SubMConv3d(in_channels, out_channels, 3, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
-            spconv.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
+            spconv.pytorch.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
-            spconv.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
+            spconv.pytorch.SubMConv3d(out_channels, out_channels, 3, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU(),
     )
 
 def stride_conv(in_channels, out_channels, indice_key=None):
-    return spconv.SparseSequential(
-            spconv.SparseConv3d(in_channels, out_channels, 3, (2, 2, 2), padding=1, bias=False, indice_key=indice_key),
+    return spconv.pytorch.SparseSequential(
+            spconv.pytorch.SparseConv3d(in_channels, out_channels, 3, (2, 2, 2), padding=1, bias=False, indice_key=indice_key),
             nn.BatchNorm1d(out_channels, eps=1e-3, momentum=0.01),
             nn.ReLU()
     )
@@ -205,8 +207,8 @@ class VxNet(nn.Module):
         self.down2 = stride_conv(64, 64, 'down2')
         self.conv3 = triple_conv(64, 64, 'subm3')  # middle line
 
-        self.extra_conv = spconv.SparseSequential(
-            spconv.SparseConv3d(64, 64, (1, 1, 1), (1, 1, 1), bias=False),  # shape no change
+        self.extra_conv = spconv.pytorch.SparseSequential(
+            spconv.pytorch.SparseConv3d(64, 64, (1, 1, 1), (1, 1, 1), bias=False),  # shape no change
             nn.BatchNorm1d(64, eps=1e-3, momentum=0.01),
             nn.ReLU()
         )

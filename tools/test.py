@@ -6,7 +6,7 @@ import mmcv
 from mmcv.runner import load_checkpoint, parallel_test
 from mmcv.parallel import scatter, collate, MMDataParallel
 from mmdet.core.evaluation.kitti_eval import get_official_eval_result
-from mmdet.core import results2json, coco_eval
+# from mmdet.core import results2json, coco_eval
 from mmdet.datasets import build_dataloader
 from mmdet.models import build_detector, detectors
 import tools.kitti_common as kitti
@@ -25,8 +25,10 @@ def single_test(model, data_loader, saveto=None, class_names=['Car']):
     annos = []
 
     prog_bar = mmcv.ProgressBar(len(data_loader))
-
+    print('data_loader type', type(data_loader))
+    # only_once = 1
     for i, data in enumerate(data_loader):
+        # print('data and **data type', type(data)); only_once=0 if only_once else None
         with torch.no_grad():
             results = model(return_loss=False, **data)
         annos+=results
@@ -140,7 +142,7 @@ def main():
 
         #load_checkpoint(model, args.checkpoint)
         model = MMDataParallel(model, device_ids=[0])
-        load_params_from_file(model, args.checkpoint)
+        load_params_from_file(model, args.checkpoint, to_cpu=True)
         data_loader = build_dataloader(
             dataset,
             1,

@@ -11,15 +11,21 @@ __all__ = [
 
 
 def _build_module(cfg, parrent=None, default_args=None):
+    if isinstance(cfg, nn.Module):
+        print('return cfg')
+    else:
+        print('obj_from_dict(cfg, parrent, default_args)')
     return cfg if isinstance(cfg, nn.Module) else obj_from_dict(
         cfg, parrent, default_args)
 
 
 def build(cfg, parrent=None, default_args=None):
     if isinstance(cfg, list):
+        print('building module using nn.Sequential')
         modules = [_build_module(cfg_, parrent, default_args) for cfg_ in cfg]
         return nn.Sequential(*modules)
     else:
+        print('building module using _build_mudule')
         return _build_module(cfg, parrent, default_args)
 
 

@@ -1,0 +1,18 @@
+Script started on 2024-06-07 09:59:45+05:30 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;rajeev-gupta@rajeevgupta-Nitro-AN515-58: ~/sensyn_ws/src/SA-SSD[01;32mrajeev-gupta@rajeevgupta-Nitro-AN515-58[00m:[01;34m~/sensyn_ws/src/SA-SSD[00m$ ls 
+'[7june_ssd.txt]'   [0m[01;34mdoc[0m     readme.md      [01;34mtools[0m
+ [01;34mconfigs[0m            [01;34mmmdet[0m   testing.logs   typescript
+]0;rajeev-gupta@rajeevgupta-Nitro-AN515-58: ~/sensyn_ws/src/SA-SSD[01;32mrajeev-gupta@rajeevgupta-Nitro-AN515-58[00m:[01;34m~/sensyn_ws/src/SA-SSD[00m$ ls -l [Kt 
+total 304
+-rw-rw-r-- 1 rajeev-gupta rajeev-gupta      0 Jun  7 09:59 '[7june_ssd.txt]'
+-rw-rw-r-- 1 rajeev-gupta rajeev-gupta      0 Jun  7 09:59  typescript
+-rw-rw-r-- 1 rajeev-gupta rajeev-gupta 285334 Jun  7 00:36  testing.logs
+drwxrwxr-x 3 rajeev-gupta rajeev-gupta   4096 Jun  6 23:45  [0m[01;34mtools[0m
+drwxrwxr-x 7 rajeev-gupta rajeev-gupta   4096 Jun  6 23:11  [01;34mmmdet[0m
+-rw-rw-r-- 1 rajeev-gupta rajeev-gupta   6537 Jun  6 13:29  readme.md
+drwxrwxr-x 2 rajeev-gupta rajeev-gupta   4096 Jun  6 13:29  [01;34mconfigs[0m
+drwxrwxr-x 2 rajeev-gupta rajeev-gupta   4096 Jun  6 13:29  [01;34mdoc[0m
+]0;rajeev-gupta@rajeevgupta-Nitro-AN515-58: ~/sensyn_ws/src/SA-SSD[01;32mrajeev-gupta@rajeevgupta-Nitro-AN515-58[00m:[01;34m~/sensyn_ws/src/SA-SSD[00m$ scri[K[K[K[Kexit
+exit
+
+Script done on 2024-06-07 10:00:06+05:30 [COMMAND_EXIT_CODE="0"]

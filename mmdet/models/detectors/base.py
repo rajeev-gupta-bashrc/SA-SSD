@@ -5,8 +5,8 @@ import mmcv
 import numpy as np
 import torch.nn as nn
 
-from mmdet.core import tensor2imgs, get_classes
-
+from mmdet.core.evaluation.class_names import get_classes
+from mmdet.core.utils.misc import tensor2imgs
 
 class BaseDetector(nn.Module):
     """Base class for detectors"""
@@ -75,6 +75,7 @@ class BaseDetector(nn.Module):
             return self.aug_test(imgs, img_metas, **kwargs)
 
     def forward(self, img, img_meta, return_loss=True, **kwargs):
+        # print(type(img), type(img_meta), type(kwargs))
         if return_loss:
             return self.forward_train(img, img_meta, **kwargs)
         else:

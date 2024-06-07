@@ -158,7 +158,7 @@ def load_params_from_file(model, filename, to_cpu=False):
        print('==> Loading parameters from checkpoint %s to %s' % (filename, 'CPU' if to_cpu else 'GPU'))
        loc_type = torch.device('cpu') if to_cpu else None
        checkpoint = torch.load(filename, map_location=loc_type)
-       model_state_disk = checkpoint['model_state']
+       model_state_disk = checkpoint['state_dict']
 
        if 'version' in checkpoint:
            print('==> Checkpoint trained from version: %s' % checkpoint['version'])

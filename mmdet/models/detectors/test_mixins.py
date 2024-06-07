@@ -1,10 +1,11 @@
-from mmdet.core import (bbox2roi, bbox_mapping, merge_aug_proposals,
-                        merge_aug_bboxes, merge_aug_masks)
+# from mmdet.core import (bbox2roi, bbox_mapping, merge_aug_proposals,
+#                         merge_aug_bboxes, merge_aug_masks)
+from mmdet.core.bbox.transforms import bbox2roi, bbox_mapping
+from mmdet.core.post_processing import merge_aug_bboxes, merge_aug_masks, merge_aug_proposals
 
 import numpy as np
 
 class RPNTestMixin(object):
-
     def simple_test_rpn(self, x, img_meta, rpn_test_cfg):
         rpn_outs = self.rpn_head(x)
         proposal_inputs = rpn_outs + (img_meta, rpn_test_cfg)

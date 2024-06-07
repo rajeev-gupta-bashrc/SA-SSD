@@ -13,7 +13,7 @@ from mmdet.core.bbox3d.geometry import rbbox2d_to_near_bbox, filter_gt_box_outsi
     sparse_sum_for_anchors_mask, fused_get_anchors_area, limit_period, center_to_corner_box3d, points_in_rbbox
 import os
 from mmdet.core.point_cloud.voxel_generator import VoxelGenerator
-from mmdet.ops.points_op import points_op_cpu
+# from mmdet.ops.points_op import points_op_cpu
 
 class KittiLiDAR(Dataset):
     def __init__(self, root, ann_file,
